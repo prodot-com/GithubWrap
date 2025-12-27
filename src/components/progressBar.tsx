@@ -3,7 +3,7 @@ type ProgressBarProps = {
   total?: number;
 };
 
-export default function ProgressBar({ step, total = 6 }: ProgressBarProps) {
+export default function ProgressBar({ step, total = 5 }: ProgressBarProps) {
   return (
     <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2">
       {Array.from({ length: total }).map((_, index) => (

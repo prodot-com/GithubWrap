@@ -14,23 +14,19 @@ type IntroProps = {
 
 const Intro = ({user, userId}: IntroProps) => {
   return (
-      <div>
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-green-500/10 blur-[120px] rounded-full pointer-events-none" />
-
-      {/* Main Content */}
-      <div className="z-10 flex flex-col items-center text-center px-6">
+        <div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-green-500/25 blur-[120px] rounded-full pointer-events-none" />
+            <div className="z-10 flex flex-col items-center text-center px-6">
         
-        {/* Avatar with Animation Ring */}
-        <div className="relative mb-8">
-          <div className="absolute inset-0 rounded-full" />
-          
-          <div className="border border-transparent rounded-full flex justify-center items-center">
-          <img
-            src={user.avatar_url}
-            alt={user.login}
-            className="w-40 h-40 rounded-full border-2 border-neutral-800 relative z-10"
-          />
+                <div className="relative mb-8">
+                <div className="absolute inset-0 rounded-full" />
+        
+                    <div className="border border-transparent rounded-full flex justify-center items-center">
+                        <img
+                        src={user.avatar_url}
+                        alt={user.login}
+                        className="w-40 h-40 rounded-full border-2 border-neutral-800 relative z-10"
+                        />
                <BorderBeam
                 size={80}
                 initialOffset={20}
@@ -56,7 +52,7 @@ const Intro = ({user, userId}: IntroProps) => {
 
         {/* The "Proceed" Button */}
         <Link
-          href={`/intro2/${userId}`}
+          href={`/wrap/${userId}`}
           className="group relative flex items-center gap-3 bg-white text-black px-10 py-5 rounded-full font-bold text-xl hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]"
         >
           Start the Journey
@@ -64,7 +60,9 @@ const Intro = ({user, userId}: IntroProps) => {
         </Link>
       </div>
 
-      <ProgressBar step={1}/>
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2">
+        <div className="h-1 w-56 rounded-full transition-all duration-300 bg-white"/>
+      </div>
       </div>
   )
 }
