@@ -26,79 +26,69 @@ export default function VolumePage({totalCommits, totalRepo, contributedRepo} : 
     }, [totalCommits]);
 
     return (
-        <div className="h-screen w-full bg-black text-white flex flex-col items-center justify-center relative overflow-hidden">
-      
-      {/* Background Grid Pattern (Subtle Tech Look) */}
-      <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+            <div className="h-screen w-full bg-black text-white flex flex-col items-center justify-center relative overflow-hidden">
+        
+        {/* Background Grid Pattern (Subtle Tech Look) */}
+        <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
 
-      <div className="z-10 text-center space-y-2">
-        <motion.div 
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-center gap-2 text-fuchsia-500 font-black uppercase tracking-widest text-sm mb-4"
-        >
-          <Database size={16} /> Chapter 02: The Volume
-        </motion.div>
+        <div className="z-10 text-center space-y-2">
+            <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-2 text-fuchsia-500 font-black uppercase tracking-widest text-sm mb-4"
+            >
+            <Database size={16} /> Chapter 02: The Volume
+            </motion.div>
 
-        <h2 className="text-2xl md:text-3xl font-bold italic text-neutral-400">
-          In 2025, your output was massive.
-        </h2>
+            <h2 className="text-2xl md:text-3xl font-bold italic text-neutral-400">
+            In 2025, your output was massive.
+            </h2>
 
-        {/* The Big Number */}
-        <div className="relative inline-block">
-          <motion.div 
-            className="text-[120px] md:text-[180px] font-black tracking-tighter leading-none text-white selection:bg-fuchsia-500"
-          >
-            <motion.span>{rounded}</motion.span>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ width: 0 }}
-            animate={{ width: "100%" }}
-            transition={{ delay: 1, duration: 2 }}
-            className="h-4 bg-fuchsia-500 absolute -bottom-2 left-0 -z-10"
-          />
+            {/* The Big Number */}
+            <div className="relative inline-block">
+            <motion.div 
+                className="text-[120px] md:text-[180px] font-black tracking-tighter leading-none text-white selection:bg-fuchsia-500"
+            >
+                <motion.span>{rounded}</motion.span>
+            </motion.div>
+            
+            <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ delay: 1, duration: 2 }}
+                className="h-4 bg-fuchsia-500 absolute -bottom-2 left-0 -z-10"
+            />
+            </div>
+
+            <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2 }}
+            className="text-xl md:text-2xl font-medium mt-6"
+            >
+            Total contributions across <span className="text-fuchsia-500 font-black">{totalRepo}</span> repositories.
+            </motion.p>
         </div>
 
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-          className="text-xl md:text-2xl font-medium mt-6"
+        {/* Narrative Footer */}
+        <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 3 }}
+            className="absolute bottom-20 flex flex-col items-center gap-6"
         >
-          Total contributions across <span className="text-fuchsia-500 font-black">{totalRepo}</span> repositories.
-        </motion.p>
-      </div>
-
-      {/* Narrative Footer */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 3 }}
-        className="absolute bottom-20 flex flex-col items-center gap-6"
-      >
-         <p className="text-neutral-500 italic max-w-xs text-center">
-           "Our AI detected a heavy surge of productivity during the summer months."
-         </p>
-         
-         <Link
-          href={`/user/persona`}
-          className="group flex items-center gap-3 bg-fuchsia-500 text-black px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all shadow-[0_0_20px_rgba(217,70,239,0.3)]"
-        >
-          What's your persona?
-          <ChevronRight className="group-hover:translate-x-1 transition-transform" />
-        </Link>
-      </motion.div>
-
-      {/* Static Progress Bar (Slide 2 of 6) */}
-      {/* <div className="absolute top-6 left-6 right-6 flex gap-2">
-        <div className="h-1 flex-1 bg-white rounded-full" />
-        <div className="h-1 flex-1 bg-white rounded-full" />
-        <div className="h-1 flex-1 bg-neutral-800 rounded-full" />
-        <div className="h-1 flex-1 bg-neutral-800 rounded-full" />
-        <div className="h-1 flex-1 bg-neutral-800 rounded-full" />
-        <div className="h-1 flex-1 bg-neutral-800 rounded-full" />
-      </div> */}
-    </div>
-  );
+            <p className="text-neutral-500 italic max-w-xs text-center">
+            "Our AI detected a heavy surge of productivity during the summer months."
+            </p>
+            
+            <Link
+            href={`/user/persona`}
+            className="group flex items-center gap-3 bg-fuchsia-500 text-black px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all shadow-[0_0_20px_rgba(217,70,239,0.3)]"
+            >
+            What's your persona?
+            <ChevronRight className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+        </motion.div>
+        </div>
+    );
 }
