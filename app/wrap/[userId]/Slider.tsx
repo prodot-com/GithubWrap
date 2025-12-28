@@ -10,6 +10,8 @@ import { getBusiestDay } from "@/src/utils/BusyDay";
 import GrindPage from "@/src/components/Grind";
 import { detectTopLanguages } from "@/src/utils/CommitLang";
 import LanguagePage from "@/src/components/Lang";
+import QuotePage from "@/src/components/Verdict";
+import WrapPage from "@/src/components/Card";
 
 type RepoType = {
   repository: {
@@ -48,7 +50,7 @@ export default function Slider({
   repoDetails
 }: Props) {
   const [step, setStep] = useState<number>(1);
-  const [maxStep, setMaxStep] = useState<number>(5);
+  const [maxStep, setMaxStep] = useState<number>(6);
 //   const [repo, setRepo] = useState<RepoType[]>([]);
 
 //   console.log(repoDetails)
@@ -59,7 +61,7 @@ export default function Slider({
 //   console.log(busyDay)
 
     const languages = detectTopLanguages(repoDetails)
-    console.log(languages)
+    // console.log(languages)
 
   return (
     <div className="min-h-screen bg-black text-white grid grid-cols-4 gap-4 relative overflow-hidden">
@@ -94,6 +96,14 @@ export default function Slider({
             <LanguagePage languages={languages}/>
         )}
 
+        {step === 5 && (
+            <QuotePage persona={personaX.type} language={languages[0].language} commitCount={totalCommits}/>
+        )}
+
+        {step === 6 && (
+            <WrapPage/>
+        )}
+
         <ProgressBar step={step} />
       </div>
 
@@ -102,8 +112,8 @@ export default function Slider({
         <button
           onClick={() => setStep((s) => s + 1)}
           disabled={step === maxStep}
-          className="group p-3 cursor-pointer rounded-full hover:bg-neutral-700
-          disabled:opacity-30 disabled:cursor-not-allowed"
+          className={`group p-3 cursor-pointer rounded-full hover:bg-neutral-700
+          disabled:opacity-30 disabled:cursor-not-allowed`}
         >
           <ArrowRight
             className="transition-all duration-150

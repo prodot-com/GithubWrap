@@ -29,7 +29,6 @@ export function detectTopLanguages(
     { commits: number; color: string }
   > = {};
 
-  // Aggregate commits per language
   repoDetails.forEach((repo) => {
     const lang = repo.repository.primaryLanguage;
     if (!lang) return;
@@ -44,7 +43,6 @@ export function detectTopLanguages(
     languageMap[lang.name].commits += repo.contributions.totalCount;
   });
 
-  // Convert to array & sort
   const sorted = Object.entries(languageMap)
     .map(([language, data]) => ({
       language,
@@ -53,6 +51,5 @@ export function detectTopLanguages(
     }))
     .sort((a, b) => b.commits - a.commits);
 
-  // Return top 2
   return sorted.slice(0, 2);
 }
