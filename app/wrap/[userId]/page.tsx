@@ -107,7 +107,7 @@ export default async function UserIntroPage({ params }: Props) {
     (c: any) => c.authoredDate
   );
 
-//   console.log(typeof(commitDates))
+  // console.log(commitDates)
 
 const hours = commitDates.map(ts =>
   new Date(ts).getHours()
@@ -136,7 +136,8 @@ const hours = commitDates.map(ts =>
           .totalContributions
       }
       repoDetails={repos}
-      commitHour={hours}   
+      commitHour={hours}
+      commitDates= {commitDates}
     />
   );
 }
