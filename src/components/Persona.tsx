@@ -61,7 +61,7 @@ export default function PersonaPage({ persona }: PersonaProps) {
         ))}
       </div>
 
-      <div className="z-10 text-center flex flex-col items-center px-6 max-w-2xl">
+      <div className= "mb-17 mt-12 h-screen w-full z-10 text-center flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

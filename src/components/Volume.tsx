@@ -26,7 +26,7 @@ export default function VolumePage({totalCommits, totalRepo, contributedRepo} : 
     }, [totalCommits]);
 
     return (
-            <div className="h-screen w-full bg-black text-white flex flex-col items-center justify-center relative overflow-hidden">
+            <div className="h-screen w-full  pb-10 bg-black text-white flex flex-col items-center justify-center relative overflow-hidden">
         
         {/* Background Grid Pattern (Subtle Tech Look) */}
         <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
@@ -75,7 +75,7 @@ export default function VolumePage({totalCommits, totalRepo, contributedRepo} : 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 3 }}
-            className="absolute bottom-20 flex flex-col items-center gap-6"
+            className="flex flex-col items-center gap-6"
         >
             <p className="text-neutral-500 italic max-w-xs text-center">
             "Our AI detected a heavy surge of productivity during the summer months."

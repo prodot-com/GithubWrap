@@ -9,15 +9,11 @@ type grindType = {
 } 
 
 export default function GrindPage({busiestDay,commitCount}:grindType) {
-  // Mock Data: In production, fetch this from GitHub's contributionCalendar
-//   const busiestDay = "October 14th";
-//   const commitCount = 42;
 
   return (
-    <div className="h-screen w-full bg-neutral-950 text-white flex flex-col items-center justify-center relative overflow-hidden">
+    <div className="h-screen pb-25 md:pb-0 w-full bg-neutral-950 text-white flex flex-col items-center justify-center relative overflow-hidden">
       
-      {/* Background: Pulsing Heatmap Squares */}
-      <div className="absolute inset-0 grid grid-cols-10 md:grid-cols-20 gap-2 opacity-5 p-4">
+      {/* <div className="absolute inset-0 grid grid-cols-10 md:grid-cols-20 gap-2 opacity-5 p-4">
         {[...Array(200)].map((_, i) => (
           <motion.div
             key={i}
@@ -30,7 +26,7 @@ export default function GrindPage({busiestDay,commitCount}:grindType) {
             className="aspect-square rounded-sm"
           />
         ))}
-      </div>
+      </div> */}
 
       <div className="z-10 text-center flex flex-col items-center px-6">
         <motion.div 
@@ -45,16 +41,15 @@ export default function GrindPage({busiestDay,commitCount}:grindType) {
           You never clocked out.
         </h2>
 
-        {/* Busiest Day Card */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", damping: 12 }}
           className="bg-white border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(249,115,22,1)] rounded-xl mb-12"
         >
-          <div className="flex items-center justify-center gap-4 text-orange-500 mb-2">
-            <Flame size={40} className="fill-current animate-bounce" />
-            <span className="text-black font-black text-5xl italic tracking-tighter">
+          <div className="flex items-center justify-center gap-0 w-full md:gap-4 text-orange-500 mb-2">
+            <Flame  className="w-19 h-19 md:w-11 md:h-11 fill-current" />
+            <span className="text-black font-black text-3xl md:text-5xl italic tracking-tighter">
               {busiestDay}
             </span>
           </div>

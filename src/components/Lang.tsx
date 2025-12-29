@@ -27,14 +27,9 @@ export default function LanguagePage({ languages }: LanguagePageProps) {
   );
 
   return (
-    <div className="h-screen w-full bg-black text-white flex flex-col items-center justify-center relative overflow-hidden px-4">
+    <div className="h-screen w-full pb-33 md:pb-20 bg-black text-white flex flex-col items-center justify-center relative overflow-hidden px-5">
 
-      <div className="absolute inset-0 opacity-[0.03] font-mono text-xs select-none pointer-events-none p-4 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <div key={i} className="whitespace-nowrap italic">
-          </div>
-        ))}
-      </div>
+    
 
       <div className="z-10 text-center flex flex-col items-center w-full max-w-2xl">
 
@@ -65,7 +60,7 @@ export default function LanguagePage({ languages }: LanguagePageProps) {
               <p className="text-xs font-black uppercase tracking-widest text-neutral-400">
                 Main Syntax
               </p>
-              <h1 className="text-5xl md:text-7xl font-black tracking-tighter">
+              <h1 className="text-4xl md:text-7xl font-black tracking-tighter">
                 {mainLang.language}
               </h1>
             </div>
@@ -116,7 +111,6 @@ export default function LanguagePage({ languages }: LanguagePageProps) {
           </div>
         </motion.div>
 
-        {/* Commentary */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
