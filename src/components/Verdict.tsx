@@ -7,10 +7,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 type quoteReqType = {
   persona: string,
   language: string,
-  commitCount: number
+  commitCount: number,
+  onQuoteGenerated: (quote: string) => void;
 }
 
-export default function QuotePage({ persona, language, commitCount }: quoteReqType) {
+export default function QuotePage({ persona, language, commitCount , onQuoteGenerated}: quoteReqType) {
   const [quote, setQuote] = useState("");
   const [displayedQuote, setDisplayedQuote] = useState("");
   const [status, setStatus] = useState("idle"); // idle, analyzing, typing, finished
@@ -30,6 +31,7 @@ export default function QuotePage({ persona, language, commitCount }: quoteReqTy
       });
       const data = await res.json();
       setQuote(data.quote);
+      onQuoteGenerated(data.quote)
       setStatus("typing");
     } catch (e) {
       setQuote("You code like a wizard, but your commit messages are pure chaos.");

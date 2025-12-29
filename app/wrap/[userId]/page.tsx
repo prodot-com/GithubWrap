@@ -16,6 +16,7 @@ export default async function UserIntroPage({ params }: Props) {
   const statsQuery = `
     query ($username: String!) {
   user(login: $username) {
+  avatarUrl
     repositories(privacy: PUBLIC) {
       totalCount
     }
@@ -83,7 +84,7 @@ export default async function UserIntroPage({ params }: Props) {
   );
 
   const user = statsRes.data.data.user;
-  // console.log(user.contributionsCollection.commitContributionsByRepository)
+  console.log(user)
   const repos = user.contributionsCollection.commitContributionsByRepository ?? [];
 
   // const commitLang = 
@@ -147,6 +148,8 @@ const hours = commitDates.map(ts =>
       repoDetails={repos}
       commitHour={hours}
       commitDates= {commitDates}
+      userName={userId}
+      avatarUrl= {user.avatarUrl}
     />
   );
 }
