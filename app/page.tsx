@@ -23,7 +23,7 @@ export default function Home() {
 
 useEffect(() => {
   // console.log(username)
-  if (!username || username.trim().length < 2) {
+  if (!username) {
     setUserDetails(null);
     setError("");
     return;
@@ -85,8 +85,8 @@ const rediretcHandler = () => {
   return (
 <div className="bg-white selection:bg-fuchsia-300 min-h-screen overflow-x-hidden">
   <section 
-    className="min-h-screen w-full relative bg-cover bg-center flex flex-col items-center"
-    style={{ backgroundImage: "url('/back.png')" }}
+    className="relative min-h-screen w-full flex flex-col items-center
+             bg-[url('/back.png')] bg-cover bg-center"
   >
     <div className="absolute inset-0 backdrop-blur-[2px]"></div>
     <div className='relative z-20 w-full'>
@@ -98,7 +98,7 @@ const rediretcHandler = () => {
         </div>
       </div>
 
-      <div className='flex flex-col min-h-[52vh] justify-between py-1 px-4'>
+      <div className='flex flex-col min-h-[40vh] md:min-h-[52vh] justify-between py-1 px-4'>
         <div className="flex justify-center text-center">
           <p className="shadow-2xl px-4 border border-transparent py-3 text-5xl md:text-8xl instrument-serif-italic-bold text-black backdrop-blur-xl rounded-[5px] wrap-break-words">
             Github-Wrapped
@@ -119,6 +119,7 @@ const rediretcHandler = () => {
             <input 
               type="text"  
               placeholder="GitHub username..."
+              value={username}
               onChange={e => {
                 setError("")
                 setUsername(e.target.value)
@@ -136,10 +137,10 @@ const rediretcHandler = () => {
         </div>
       </div>
 
-      {userDetails?.login && (
-        <div className="mt-5 flex justify-center px-4">
+      {userDetails?.login ? (
+        <div className="mt-5 flex justify-center px-10 md:px-4">
           <div className="relative w-full max-w-92.5 rounded-[5px] bg-fuchsia-200/20 backdrop-blur-2xl border border-white/20 shadow-xl p-4 md:p-6">
-            <div className="flex flex-col sm:flex-row gap-4 md:gap-7 items-center sm:items-start text-center sm:text-left">
+            <div className="flex flex-row gap-7 md:gap-7 items-center text-left">
               {userDetails?.avatarUrl && (
                 <img
                   src={userDetails?.avatarUrl}
@@ -178,10 +179,16 @@ const rediretcHandler = () => {
             )}
           </div>
         </div>
-      )}
+      ):(<div className='text-xl flex justify-center items-center mt-10'>
+        <p className='instrument-serif-bold backdrop-blur-2xl py-1 px-2 rounded-[5px] text-white/75 tracking-wider'>Example: <span className='underline instrument-serif-italic tracking-normal cursor-pointer'
+        onClick={()=>
+          setUsername("prodot-com")
+        }
+        >prodot-com</span></p>
+        </div>)}
     </div>
 
-    <div className="absolute bottom-5 md:bottom-10 animate-bounce hidden sm:block">
+    <div className="absolute bottom-20 md:bottom-10 animate-bounce ">
       <p className="text-fuchsia-200 font-bold uppercase tracking-widest text-xs">
         <ArrowDown/>
       </p>

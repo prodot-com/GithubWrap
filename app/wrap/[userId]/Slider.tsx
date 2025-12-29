@@ -11,7 +11,7 @@ import GrindPage from "@/src/components/Grind";
 import { detectTopLanguages } from "@/src/utils/CommitLang";
 import LanguagePage from "@/src/components/Lang";
 import QuotePage from "@/src/components/Verdict";
-import WrapPage from "@/src/components/finaleCard";
+import WrapPage from "@/src/components/FinaleCard";
 
 type RepoType = {
   repository: {

@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   try {
     const { username } = await req.json();
 
-    if (!username || username.length < 2) {
+    if (!username) {
       return NextResponse.json([]);
     }
 
