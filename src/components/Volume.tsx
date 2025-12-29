@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { motion, useSpring, useTransform, animate } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, Database, Zap } from "lucide-react";
+import { getVolumeCopy } from "../utils/VolumeCopy";
 
 type IntroProps = {
     totalCommits: number,
@@ -25,6 +26,9 @@ export default function VolumePage({totalCommits, totalRepo, contributedRepo} : 
         return controls.stop;
     }, [totalCommits]);
 
+    const copy = getVolumeCopy(totalCommits);
+
+
     return (
             <div className="h-screen w-full  pb-10 bg-black text-white flex flex-col items-center justify-center relative overflow-hidden">
         
@@ -41,7 +45,7 @@ export default function VolumePage({totalCommits, totalRepo, contributedRepo} : 
             </motion.div>
 
             <h2 className="text-2xl md:text-3xl font-bold italic text-neutral-400">
-            In 2025, your output was massive.
+            {copy.title}
             </h2>
 
             {/* The Big Number */}
@@ -75,19 +79,12 @@ export default function VolumePage({totalCommits, totalRepo, contributedRepo} : 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 3 }}
-            className="flex flex-col items-center gap-6"
+            className="flex flex-col items-center gap-6 mt-3"
         >
             <p className="text-neutral-500 italic max-w-xs text-center">
-            "Our AI detected a heavy surge of productivity during the summer months."
+            {copy.footer}
             </p>
             
-            <Link
-            href={`/user/persona`}
-            className="group flex items-center gap-3 bg-fuchsia-500 text-black px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-all shadow-[0_0_20px_rgba(217,70,239,0.3)]"
-            >
-            What's your persona?
-            <ChevronRight className="group-hover:translate-x-1 transition-transform" />
-            </Link>
         </motion.div>
         </div>
     );

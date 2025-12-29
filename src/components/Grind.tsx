@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, Flame, Calendar, HardHat } from "lucide-react";
+import { getGrindCopy } from "../utils/GrindCopy";
 
 type grindType = {
     busiestDay: string,
@@ -9,25 +10,10 @@ type grindType = {
 } 
 
 export default function GrindPage({busiestDay,commitCount}:grindType) {
+  const grind = getGrindCopy(commitCount);
 
   return (
     <div className="h-screen pb-25 md:pb-0 w-full bg-neutral-950 text-white flex flex-col items-center justify-center relative overflow-hidden">
-      
-      {/* <div className="absolute inset-0 grid grid-cols-10 md:grid-cols-20 gap-2 opacity-5 p-4">
-        {[...Array(200)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0.1 }}
-            animate={{ 
-              opacity: [0.1, 0.5, 0.1],
-              backgroundColor: i % 7 === 0 ? "#22c55e" : "#1e293b" 
-            }}
-            transition={{ duration: Math.random() * 3 + 2, repeat: Infinity }}
-            className="aspect-square rounded-sm"
-          />
-        ))}
-      </div> */}
-
       <div className="z-10 text-center flex flex-col items-center px-6">
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
@@ -37,8 +23,8 @@ export default function GrindPage({busiestDay,commitCount}:grindType) {
           <HardHat size={16} /> Chapter 04: The Grind
         </motion.div>
 
-        <h2 className="text-3xl md:text-4xl font-bold text-neutral-400 mb-2 italic">
-          You never clocked out.
+        <h2 className="text-3xl md:text-4xl font-bold text-neutral-400 mb-6 italic">
+          {grind.title}
         </h2>
 
         <motion.div
@@ -59,7 +45,7 @@ export default function GrindPage({busiestDay,commitCount}:grindType) {
         </motion.div>
 
         <p className="text-xl text-neutral-500 max-w-sm italic">
-          "The AI noticed a massive spike in activity. Were you even sleeping that week?"
+          {grind.ai}
         </p>
       </div>
 

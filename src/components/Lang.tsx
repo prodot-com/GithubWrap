@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Terminal } from "lucide-react";
+import { getLanguageInsight } from "../utils/LangInsight";
 
 type LanguageUsage = {
   language: string;
@@ -26,6 +27,8 @@ export default function LanguagePage({ languages }: LanguagePageProps) {
     (mainLang.commits / totalCommits) * 100
   );
 
+  const insight = getLanguageInsight(languages)
+
   return (
     <div className="h-screen w-full pb-33 md:pb-20 bg-black text-white flex flex-col items-center justify-center relative overflow-hidden px-5">
 
@@ -42,7 +45,7 @@ export default function LanguagePage({ languages }: LanguagePageProps) {
         </motion.div>
 
         <h2 className="text-3xl md:text-5xl font-black italic tracking-tighter mb-12">
-          Your year had a <br /> distinct flavor.
+          {insight.title}
         </h2>
 
         {/* Card */}
@@ -118,10 +121,7 @@ export default function LanguagePage({ languages }: LanguagePageProps) {
           className="mt-10 p-4 border-2 border-dashed border-neutral-700 rounded-xl"
         >
           <p className="text-neutral-400 font-medium italic">
-            “You wrote {mainLang.language} like a native
-            {languages[1]
-              ? ` — ${languages[1].language} was a strong second.`
-              : "."}”
+            {`“${insight.description}”`}
           </p>
         </motion.div>
       </div>

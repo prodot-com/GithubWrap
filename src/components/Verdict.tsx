@@ -30,9 +30,12 @@ export default function QuotePage({ persona, language, commitCount , onQuoteGene
         }),
       });
       const data = await res.json();
+      setTimeout(()=>{
       setQuote(data.quote);
       onQuoteGenerated(data.quote)
       setStatus("typing");
+      },4000)
+
     } catch (e) {
       setQuote("You code like a wizard, but your commit messages are pure chaos.");
       setStatus("typing");
@@ -40,6 +43,7 @@ export default function QuotePage({ persona, language, commitCount , onQuoteGene
   };
 
   useEffect(() => {
+    const speed = quote.length > 120 ? 20 : 35;
     if (status === "typing" && quote) {
       let i = 0;
       const interval = setInterval(() => {
@@ -49,7 +53,7 @@ export default function QuotePage({ persona, language, commitCount , onQuoteGene
           clearInterval(interval);
           setStatus("finished");
         }
-      }, 40);
+      }, speed);
       return () => clearInterval(interval);
     }
   }, [status, quote]);
@@ -57,16 +61,15 @@ export default function QuotePage({ persona, language, commitCount , onQuoteGene
   return (
     <div className="min-h-screen w-full bg-black text-white flex flex-col items-center justify-center relative md:px-5">
       
-      {/* <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[100%_2px,3px_100%] pointer-events-none" /> */}
       
       <div className="pb-17 md:pb-0 z-10 text-center flex flex-col items-center w-full md:mx-auto">
         
         <motion.div 
           initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          className="bg-black border-2 border-fuchsia-500 px-4 py-1 mb-12 md:mb-10 shadow-[4px_4px_0px_0px_rgba(217,70,239,1)]"
+          className="bg-black px-4 py-1 mb-12 md:mb-10"
         >
           <p className="text-[10px] md:text-xs font-black tracking-[0.3em] text-fuchsia-500 flex items-center gap-2 uppercase">
-            <BrainCircuit size={14} /> SYSTEM.REFLECT(USER)
+            <BrainCircuit size={14} /> CHAPTER 06: THE QUOTE
           </p>
         </motion.div>
 
@@ -77,10 +80,8 @@ export default function QuotePage({ persona, language, commitCount , onQuoteGene
         )}
 
         <AnimatePresence mode="wait">
-          {/* Responsive Container: Fixed height on desktop to prevent jump, auto on mobile */}
           <div className="w-full max-w-2xl min-h-[400px] md:h-[480px] flex justify-center items-center px-2">
           {!isStarted ? (
-            /* START STATE */
             <motion.div 
               key="start"
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
@@ -109,8 +110,8 @@ export default function QuotePage({ persona, language, commitCount , onQuoteGene
                 <Skeleton className="h-6 md:h-7 w-[85%] rounded-[2px] bg-fuchsia-500/10 animate-pulse delay-300" />
                 <Skeleton className="h-6 md:h-7 w-[60%] rounded-[2px] bg-fuchsia-500/20 animate-pulse delay-500" />
 
-                <p className="mt-6 text-[10px] font-mono uppercase tracking-[0.3em] text-fuchsia-500/50 animate-bounce">
-                  Processing Metadata...
+                <p className="mt-6 text-[10px] font-mono  tracking-[0.3em] text-fuchsia-500/90">
+                  groq is thinking...
                 </p>
               </div>
           ) : (

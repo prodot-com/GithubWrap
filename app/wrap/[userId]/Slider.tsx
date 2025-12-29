@@ -60,7 +60,8 @@ export default function Slider({
 
   const personaX = detectPersona(commitHour, commitDates, totalCommits);
   const busyDay = getBusiestDay(commitDates);
-  const languages = detectTopLanguages(repoDetails)
+  const languages = detectTopLanguages(repoDetails);
+  console.log(languages)
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden flex items-center justify-center">
@@ -72,7 +73,7 @@ export default function Slider({
                 <VolumePage totalCommits={totalCommits} totalRepo={totalRepo} contributedRepo={contributedRepo}/>
             )}
             {step === 2 && 
-                <PersonaPage persona={personaX} />}
+                <PersonaPage persona={personaX} avatarUrl={avatarUrl}/>}
 
             {step === 3 && (
                 <GrindPage busiestDay={busyDay.date} commitCount={busyDay.commits}/>

@@ -38,7 +38,7 @@ export default function FinalePage(props: WrappedCardProps) {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center px-4 md:px-8 gap-8 overflow-x-hidden">
+    <div className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center px-4 md:px-8 gap-8 ">
       
       <motion.div 
         initial={{ y: -20, opacity: 0 }} 
@@ -53,7 +53,7 @@ export default function FinalePage(props: WrappedCardProps) {
         </h1>
       </motion.div>
 
-      <div className="relative w-full flex flex-col items-center justify-center gap-8">
+      <div className="relative w-full flex flex-col items-center justify-center gap-1">
 
         {/* CARD – always centered */}
         <motion.div 
@@ -70,10 +70,10 @@ export default function FinalePage(props: WrappedCardProps) {
         {/* BUTTONS */}
         <div
           className="
-            flex flex-col gap-4
+            flex md:flex-col gap-4
             w-full max-w-sm
             md:fixed md:bottom-21 md:right-123
-            md:w-auto md:max-w-none "
+            md:w-auto md:max-w-none justify-center"
         >
           <button
             onClick={downloadCard}
@@ -100,15 +100,6 @@ export default function FinalePage(props: WrappedCardProps) {
           </button>
         </div>
       </div>
-
-
-      {/* <motion.p 
-        animate={{ opacity: [0.4, 1, 0.4] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="text-neutral-500 text-[10px] md:text-xs font-mono uppercase tracking-[0.4em] mt-4"
-      >
-        Ready for 2026? Keep shipping.
-      </motion.p> */}
     </div>
   );
 }

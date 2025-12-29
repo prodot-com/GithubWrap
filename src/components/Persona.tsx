@@ -17,6 +17,7 @@ export type PersonaResult = {
 
 type PersonaProps = {
   persona: PersonaResult;
+  avatarUrl: string;
 };
 
 // Map color strings to specific Tailwind CSS classes
@@ -31,13 +32,12 @@ const colorMap: Record<PersonaColor, { text: string; bg: string; border: string;
   neutral: { text: "text-slate-400", bg: "bg-slate-500", border: "border-slate-500", glow: "shadow-slate-500/40", gradient: "from-slate-900" },
 };
 
-export default function PersonaPage({ persona }: PersonaProps) {
+export default function PersonaPage({ persona , avatarUrl}: PersonaProps) {
   const styles = colorMap[persona.color] || colorMap.neutral;
 
   return (
-    <div className={`h-screen w-full bg-gradient-to-b ${styles.gradient} to-black text-white flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-1000`}>
-      
-      {/* Animated Floating Particles */}
+    <div className={`h-screen w-full bg-gradient-to-b ${styles.gradient} via-black/80 to-black text-white flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-1000`}>
+    
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (
           <motion.div
@@ -67,7 +67,7 @@ export default function PersonaPage({ persona }: PersonaProps) {
           animate={{ opacity: 1, y: 0 }}
           className={`flex items-center gap-2 ${styles.text} font-black uppercase tracking-widest text-sm mb-8`}
         >
-          <Sparkles size={16} /> Chapter 03: The Identity
+          <Sparkles size={16} /> Chapter 03: The Persona
         </motion.div>
 
         {/* The Animated Icon Container */}
@@ -75,14 +75,13 @@ export default function PersonaPage({ persona }: PersonaProps) {
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 100, damping: 15 }}
-          className={`w-44 h-44 rounded-full bg-white/5 border-2 border-white/20 flex items-center justify-center mb-10 relative shadow-2xl ${styles.glow}`}
+          className={`w-44 h-44 rounded-full bg-white/5 border-2 border-white/20 flex items-center justify-center mb-5 relative shadow-2xl ${styles.glow}`}
         >
           {/* Neon Glow Rings */}
           <div className={`absolute inset-0 rounded-full border-2 ${styles.border} animate-ping opacity-20`} />
-          <div className={`absolute inset-4 rounded-full border ${styles.border} animate-pulse opacity-40`} />
+          {/* <div className={`absolute inset-4 rounded-full border ${styles.border} animate-pulse opacity-40`} /> */}
           
-          {/* Displaying the Emoji Icon */}
-          <span className="text-7xl drop-shadow-lg select-none">{persona.icon}</span>
+          <img src={avatarUrl} alt="profile" className="w-full h-full object-cover rounded-full"/>
         </motion.div>
 
         <motion.h1
@@ -117,7 +116,7 @@ export default function PersonaPage({ persona }: PersonaProps) {
           className="px-6 py-3 bg-white/10 rounded-2xl border border-white/10 backdrop-blur-xl shadow-xl"
         >
           <p className="text-lg md:text-xl font-medium">
-            AI Insight: <span className={`${styles.text} font-black`}>{persona.stat}</span>
+            <span className={`${styles.text} font-black`}>{persona.stat}</span>
           </p>
         </motion.div>
       </div>
