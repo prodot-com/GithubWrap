@@ -19,18 +19,25 @@ type userType = {
 
 export default function Home() {
   const router = useRouter();
-  const [userDetails, setUserDetails] = useState<userType | null>(null)
   const [username, setUsername] = useState<string>("");
+  const [userDetails, setUserDetails] = useState<userType | null>(null)
   const [error, setError] = useState<string>('')
   const [buttonEnable, setButtonEnable] = useState<boolean>(false)
 
-useEffect(() => {
-  // console.log(username)
-  if (!username) {
-    setUserDetails(null);
-    setError("");
-    return;
-  }
+  const checkUsername = (username: any): string => {
+  if (!username) return "";
+
+  return String(username)
+    .trim()
+    .replace(/^@+/, "");
+};
+
+  useEffect(() => {
+    if (!username) {
+      setUserDetails(null);
+      setError("");
+      return;
+    }
 
   const timeout = setTimeout(async () => {
     try {
@@ -108,7 +115,7 @@ return (
 
           <div className='flex justify-center text-center max-w-3xl mx-auto'>
             <p className='px-4 py-2 rounded-[5px] bg-fuchsia-300/20 backdrop-blur-2xl border border-transparent text-xl md:text-3xl instrument-serif-bold'>
-              Your year in code. The ultimate 2025 GitHub Wrapped is here. Get AI qoute.
+              Your year in code. The ultimate 2025 GitHub Wrapped is here.<br/> Get AI qoute.
             </p>
           </div>
 
@@ -123,7 +130,7 @@ return (
                 value={username}
                 onChange={e => {
                   setError("")
-                  setUsername(e.target.value)
+                  setUsername(checkUsername(e.target.value))
                 }}
                 className="flex-1 bg-transparent h-10 outline-none text-xl md:text-3xl instrument-serif-italic px-2"
               />
@@ -159,7 +166,7 @@ return (
                 >
                   <div className="flex flex-col md:gap-2 items-start">
                     {userDetails?.login && (
-                      <p className="text-xl font-black text-black leading-tight">
+                      <p className="text-xl font-bold text-black leading-tight flex items-center">
                         @{userDetails.login}
                       </p>
                     )}
@@ -210,7 +217,7 @@ return (
             </div>
           </div>
         ):(<div className='text-xl flex justify-center items-center mt-10'>
-          <p className='instrument-serif-bold backdrop-blur-2xl py-1 px-2 rounded-[5px] text-white/75 tracking-wider'>Example: <span className='underline instrument-serif-italic tracking-normal cursor-pointer'
+          <p className='instrument-serif backdrop-blur-2xl py-1 px-2 rounded-[5px] text-white/75 tracking-wider'>Example: <span className='underline instrument-serif-italic tracking-normal cursor-pointer'
           onClick={()=>
             setUsername("prodot-com")
           }
