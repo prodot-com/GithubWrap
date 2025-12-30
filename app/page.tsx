@@ -101,14 +101,14 @@ return (
 
         <div className='flex flex-col min-h-[40vh] md:min-h-[52vh] justify-between py-1 px-4'>
           <div className="flex justify-center text-center">
-            <p className="shadow-2xl px-4 border border-transparent py-3 text-5xl md:text-8xl instrument-serif-italic-bold text-black backdrop-blur-xl rounded-[5px] wrap-break-words">
-              Github-Wrapped
+            <p className="shadow-2xl px-4 border border-transparent py-3 text-5xl md:text-8xl instrument-serif-bold text-black backdrop-blur-xl rounded-[5px] wrap-break-words">
+              Githubwrap<span className='instrument-serif-italic-bold'>X</span>
             </p>
           </div>
 
           <div className='flex justify-center text-center max-w-3xl mx-auto'>
-            <p className='px-4 py-2 rounded-[5px] bg-fuchsia-300/50 backdrop-blur-2xl border border-transparent text-xl md:text-3xl instrument-serif-italic-bold'>
-              Your year in code, analyzed by AI. The ultimate 2025 GitHub Wrapped is here.
+            <p className='px-4 py-2 rounded-[5px] bg-fuchsia-300/20 backdrop-blur-2xl border border-transparent text-xl md:text-3xl instrument-serif-bold'>
+              Your year in code. The ultimate 2025 GitHub Wrapped is here. Get AI qoute.
             </p>
           </div>
 

@@ -3,7 +3,7 @@ import "./globals.css";
 import {Analytics} from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
-  title: "Github-WrapX - Veiw your Github journey",
+  title: "GithubWrapX - Veiw your Github journey",
   description: "Veiw your Github journey",
 };
 
