@@ -74,7 +74,7 @@ export default function FinalePage(props: WrappedCardProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="flex flex-row md:flex-col gap-6 mt-12 md:mt-0 md:fixed md:right-12 md:bottom-12 z-20"
+          className="flex flex-row md:flex-col gap-6 mt-12 md:mt-0 md:fixed md:right-112 md:bottom-7 z-20"
         >
           <button
             onClick={downloadCard}
