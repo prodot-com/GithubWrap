@@ -61,7 +61,8 @@ export default function VolumePage({ totalCommits, totalRepo, contributedRepo }:
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-2 md:gap-3 text-zinc-500 font-mono uppercase tracking-[0.3em] md:tracking-[0.5em] text-[9px] md:text-xs mb-6 md:mb-8"
         >
-          <Database size={12} className="text-zinc-600 md:w-3.5" /> Chapter 02: The Volume
+          {/* <Database size={12} className="text-zinc-600 md:w-3.5" />  */}
+          Chapter 02: The Volume
         </motion.div>
 
         <motion.h2 
@@ -87,7 +88,7 @@ export default function VolumePage({ totalCommits, totalRepo, contributedRepo }:
             initial={{ width: 0 }}
             animate={{ width: "60%" }}
             transition={{ delay: 1.5, duration: 2, ease: "circOut" }}
-            className="h-px bg-linear-to-r from-transparent via-zinc-500 to-transparent absolute -bottom-2 left-1/2 -translate-x-1/2"
+            className="h-px bg-linear-to-r from-transparent via-zinc-500 to-transparent absolute -bottom-3 left-1/2 -translate-x-1/2"
           />
         </div>
 

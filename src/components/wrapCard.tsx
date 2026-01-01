@@ -98,7 +98,7 @@ export const WrappedCard = forwardRef<HTMLDivElement, WrappedCardProps>(
 
         <motion.div variants={item} className="z-10 space-y-3 mt-2 md:mt-1 md:space-y-4">
           <div className="flex items-center gap-2 text-zinc-400">
-            <Calendar size={14} className="text-emerald-500 md:w-4" />
+            {/* <Calendar size={14} className="text-emerald-500 md:w-4" /> */}
             <span className="text-[13px] md:text-[16px] font-medium tracking-tight">Your peak velocity was on <span className="text-white underline">{busiestDay}</span>.</span>
           </div>
 
