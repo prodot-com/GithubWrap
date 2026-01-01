@@ -70,7 +70,7 @@ export default function FinalePage(props: WrappedCardProps) {
 
     const handleClick = ()=>{
       downloadCard(),
-      setTimeout(showConfetti,800)
+      setTimeout(showConfetti,900)
     }
 
   return (
