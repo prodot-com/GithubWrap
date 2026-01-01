@@ -27,7 +27,7 @@ const Intro = ({ user, userId }: IntroProps) => {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="relative mb-12"
         >
-          <div className="relative p-[0.5] rounded-full overflow-hidden">
+          <div className="relative p-[0.75] rounded-full overflow-hidden">
             <img
               src={user.avatar_url}
               alt={user.login}
@@ -59,7 +59,7 @@ const Intro = ({ user, userId }: IntroProps) => {
             className="text-5xl md:text-8xl font-serif italic tracking-tighter leading-[0.9] text-white"
           >
             2025 WAS <br /> 
-            <span className="text-zinc-500">SIGNIFICANT.</span>
+            <span className="">SIGNIFICANT.</span>
           </motion.h1>
 
           <motion.p 
@@ -68,7 +68,7 @@ const Intro = ({ user, userId }: IntroProps) => {
             transition={{ delay: 0.6 }}
             className="text-zinc-400 text-lg md:text-xl font-light tracking-tight"
           >
-            A digital archive of your journey, <span className="text-white font-medium underline underline-offset-8 decoration-zinc-700">@{user.login}</span>.
+            A digital archive of your journey, <span className="text-white font-medium underline underline-offset-7 decoration-zinc-700">@{user.login}</span>.
           </motion.p>
         </div>
 
