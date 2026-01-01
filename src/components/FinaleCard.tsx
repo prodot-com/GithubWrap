@@ -39,10 +39,10 @@ export default function FinalePage(props: WrappedCardProps) {
   return (
     <div className="min-h-screen bg-[#050505] text-zinc-100 flex flex-col items-center justify-start md:justify-center px-4 py-12 md:p-8 overflow-y-auto md:overflow-hidden">
 
-      <div className="fixed inset-0 pointer-events-none">
+      {/* <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/5 blur-[120px] rounded-full" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-500/5 blur-[120px] rounded-full" />
-      </div>
+      </div> */}
 
       <motion.div 
         initial={{ opacity: 0, y: -10 }} 
@@ -50,7 +50,7 @@ export default function FinalePage(props: WrappedCardProps) {
         className="text-center z-10 mb-6 mt-10 md:mt-0 md:mb-10"
       >
         <h2 className="text-zinc-500 font-mono uppercase tracking-[0.3em] md:tracking-[0.5em] text-[8px] md:text-[10px] mb-2">
-          Final Report // 2025
+          Final Card // 2025
         </h2>
         <h1 className="text-3xl md:text-5xl text-zinc-400 font-serif italic tracking-tighter">
           The <span className="text-white">Developer</span> Archive
@@ -80,7 +80,7 @@ export default function FinalePage(props: WrappedCardProps) {
             onClick={downloadCard}
             title="Download Card"
             className="group flex items-center justify-center bg-zinc-100 text-black
-                     w-14 h-14 md:w-16 md:h-16 rounded-full cursor-pointer 
+                     w-14 h-14 md:w-16 md:h-16 rounded-[5px] cursor-pointer 
                      hover:bg-white transition-all hover:scale-110 active:scale-95 shadow-xl"
           >
             <Download className="w-5 h-5 md:w-6 md:h-6" />
@@ -97,8 +97,8 @@ export default function FinalePage(props: WrappedCardProps) {
               }
             }}
             title="Share with world"
-            className="flex items-center justify-center bg-zinc-900 border border-white/10 text-white
-                     w-14 h-14 md:w-16 md:h-16 rounded-full cursor-pointer
+            className="flex items-center justify-center bg-zinc-900 border border-white/20 md:border-white/10 text-white
+                     w-14 h-14 md:w-16 md:h-16 rounded-[5px] cursor-pointer
                      hover:bg-zinc-800 transition-all hover:scale-110 active:scale-95 shadow-xl"
           >
             <Share2 className="w-5 h-5 md:w-6 md:h-6" />

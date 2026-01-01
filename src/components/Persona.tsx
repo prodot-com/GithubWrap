@@ -1,9 +1,8 @@
 "use client";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { ChevronRight, Sparkles } from "lucide-react";
 
-// Types preserved from your code
+import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
+
 export type PersonaType = "Night Owl" | "Early Bird" | "Weekend Warrior" | "Marathon Runner" | "The Architect" | "The Closer" | "Consistent King" | "The Sprinter";
 export type PersonaColor = "fuchsia" | "yellow" | "orange" | "emerald" | "blue" | "neutral" | "purple" | "rose";
 
@@ -20,36 +19,94 @@ type PersonaProps = {
   avatarUrl: string;
 };
 
-// Map color strings to specific Tailwind CSS classes
-const colorMap: Record<PersonaColor, { text: string; bg: string; border: string; glow: string; gradient: string }> = {
-  fuchsia: { text: "text-fuchsia-400", bg: "bg-fuchsia-500", border: "border-fuchsia-500", glow: "shadow-fuchsia-500/40", gradient: "from-fuchsia-950" },
-  yellow: { text: "text-yellow-400", bg: "bg-yellow-500", border: "border-yellow-500", glow: "shadow-yellow-500/40", gradient: "from-yellow-950" },
-  orange: { text: "text-orange-400", bg: "bg-orange-500", border: "border-orange-500", glow: "shadow-orange-500/40", gradient: "from-orange-950" },
-  emerald: { text: "text-emerald-400", bg: "bg-emerald-500", border: "border-emerald-500", glow: "shadow-emerald-500/40", gradient: "from-emerald-950" },
-  blue: { text: "text-blue-400", bg: "bg-blue-500", border: "border-blue-500", glow: "shadow-blue-500/40", gradient: "from-blue-950" },
-  purple: { text: "text-purple-400", bg: "bg-purple-500", border: "border-purple-500", glow: "shadow-purple-500/40", gradient: "from-purple-950" },
-  rose: { text: "text-rose-400", bg: "bg-rose-500", border: "border-rose-500", glow: "shadow-rose-500/40", gradient: "from-rose-950" },
-  neutral: { text: "text-slate-400", bg: "bg-slate-500", border: "border-slate-500", glow: "shadow-slate-500/40", gradient: "from-slate-900" },
+const colorMap: Record<
+  PersonaColor,
+  { text: string; glow: string; accent: string; gradient: string }
+> = {
+  fuchsia: {
+    text: "text-fuchsia-400",
+    glow: "shadow-fuchsia-500/20",
+    accent: "bg-fuchsia-500",
+    gradient: "bg-gradient-to-b from-fuchsia-500/20 to-transparent",
+  },
+  yellow: {
+    text: "text-yellow-400",
+    glow: "shadow-yellow-500/20",
+    accent: "bg-yellow-500",
+    gradient: "bg-gradient-to-b from-yellow-500/20 to-transparent",
+  },
+  orange: {
+    text: "text-orange-400",
+    glow: "shadow-orange-500/20",
+    accent: "bg-orange-500",
+    gradient: "bg-gradient-to-b from-orange-500/20 to-transparent",
+  },
+  emerald: {
+    text: "text-emerald-400",
+    glow: "shadow-emerald-500/20",
+    accent: "bg-emerald-500",
+    gradient: "bg-gradient-to-b from-emerald-500/20 to-transparent",
+  },
+  blue: {
+    text: "text-blue-400",
+    glow: "shadow-blue-500/20",
+    accent: "bg-blue-500",
+    gradient: "bg-gradient-to-b from-blue-500/20 to-transparent",
+  },
+  purple: {
+    text: "text-purple-400",
+    glow: "shadow-purple-500/20",
+    accent: "bg-purple-500",
+    gradient: "bg-gradient-to-b from-purple-500/20 to-transparent",
+  },
+  rose: {
+    text: "text-rose-400",
+    glow: "shadow-rose-500/20",
+    accent: "bg-rose-500",
+    gradient: "bg-gradient-to-b from-rose-500/20 to-transparent",
+  },
+  neutral: {
+    text: "text-zinc-400",
+    glow: "shadow-zinc-500/20",
+    accent: "bg-zinc-500",
+    gradient: "bg-gradient-to-b from-zinc-500/20 to-transparent",
+  },
 };
 
-export default function PersonaPage({ persona , avatarUrl}: PersonaProps) {
-  const styles = colorMap[persona.color] || colorMap.neutral;
+
+export default function PersonaPage({ persona, avatarUrl }: PersonaProps) {
+
+  function getDeterministicColor(key: string) {
+    const keys = Object.keys(colorMap) as (keyof typeof colorMap)[];
+    let hash = 0;
+
+    for (let i = 0; i < key.length; i++) {
+      hash = key.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    return colorMap[keys[Math.abs(hash) % keys.length]];
+  }
+
+  const styles = getDeterministicColor(persona.type);
+  // console.log(styles)
+
 
   return (
-    <div className={`h-screen w-full bg-gradient-to-b ${styles.gradient} via-black/80 to-black text-white flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-1000`}>
-    
+    <div className="h-screen w-full bg-[#050505] text-white flex flex-col items-center justify-center relative overflow-hidden">
+      
+      <div className={`absolute inset-0 ${styles.gradient}`} />
+      
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-white rounded-full"
+            className="absolute w-px h-px bg-white/30 rounded-full"
             animate={{
-              y: [0, -120],
-              opacity: [0, 0.7, 0],
-              scale: [1, 2, 1],
+              y: [0, -100],
+              opacity: [0, 1, 0],
             }}
             transition={{
-              duration: Math.random() * 4 + 4,
+              duration: Math.random() * 5 + 5,
               repeat: Infinity,
               delay: Math.random() * 5,
             }}
@@ -61,67 +118,71 @@ export default function PersonaPage({ persona , avatarUrl}: PersonaProps) {
         ))}
       </div>
 
-      <div className= "mb-17 mt-12 h-screen w-full z-10 text-center flex flex-col items-center">
+      <div className="z-10 pb-17 text-center flex flex-col items-center px-6">
+        
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`flex items-center gap-2 ${styles.text} font-black uppercase tracking-widest text-sm mb-8`}
+          className="flex items-center gap-3 text-zinc-500 font-mono uppercase tracking-[0.5em] text-[10px] md:text-xs mb-10"
         >
-          <Sparkles size={16} /> Chapter 03: The Persona
+          {/* <Sparkles size={14} className="text-zinc-600" />  */}
+          Chapter 03: The Persona
         </motion.div>
 
-        {/* The Animated Icon Container */}
         <motion.div
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ type: "spring", stiffness: 100, damping: 15 }}
-          className={`w-44 h-44 rounded-full bg-white/5 border-2 border-white/20 flex items-center justify-center mb-5 relative shadow-2xl ${styles.glow}`}
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-48 h-48 md:w-56 md:h-56 mb-5 group"
         >
-          {/* Neon Glow Rings */}
-          <div className={`absolute inset-0 rounded-full border-2 ${styles.border} animate-ping opacity-20`} />
-          {/* <div className={`absolute inset-4 rounded-full border ${styles.border} animate-pulse opacity-40`} /> */}
+          <div className={`absolute -inset-4 rounded-full bg-linear-to-tr ${styles.glow} to-transparent blur-2xl opacity-50 group-hover:opacity-100 transition-opacity duration-700`} />
           
-          <img src={avatarUrl} alt="profile" className="w-full h-full object-cover rounded-full"/>
+          <div className={`relative w-full h-full rounded-full border border-white/10 p-1 bg-black`}>
+             <img 
+               src={avatarUrl} 
+               alt="profile" 
+               className="w-full h-full object-cover rounded-full transition-all duration-1000"
+             />
+          </div>
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="text-6xl md:text-8xl font-black italic tracking-tighter mb-4 uppercase"
+          transition={{ delay: 0.4 }}
+          className="text-5xl md:text-8xl font-serif italic tracking-tighter text-white mb-2"
         >
           {persona.type}
         </motion.h1>
 
         <motion.div
           initial={{ width: 0 }}
-          animate={{ width: "240px" }}
-          transition={{ delay: 0.7, duration: 1 }}
-          className={`h-2 ${styles.bg} mb-8 shadow-lg shadow-black/50`}
+          animate={{ width: "120px" }}
+          transition={{ delay: 0.6, duration: 1.2 }}
+          className={`h-px ${styles.accent} opacity-50 mb-4`}
         />
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
-          className="text-2xl md:text-3xl font-bold text-neutral-100 leading-tight mb-6"
+          transition={{ delay: 0.8 }}
+          className="text-lg md:text-2xl font-light text-zinc-400 max-w-xl leading-relaxed mb-5"
         >
           {persona.description}
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 1.2 }}
-          className="px-6 py-3 bg-white/10 rounded-2xl border border-white/10 backdrop-blur-xl shadow-xl"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1 }}
+          className="px-8 py-3 bg-white/3 rounded-[5px] border border-white/10 backdrop-blur-md"
         >
-          <p className="text-lg md:text-xl font-medium">
-            <span className={`${styles.text} font-black`}>{persona.stat}</span>
+          <p className="text-sm md:text-base tracking-tight text-zinc-300">
+             <span className={`${styles.text} font-mono uppercase tracking-widest mr-2`}>Record:</span>
+             {persona.stat}
           </p>
         </motion.div>
       </div>
-
-      
     </div>
   );
 }

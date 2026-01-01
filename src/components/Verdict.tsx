@@ -1,8 +1,17 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, BrainCircuit, Wand2 } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
+
+const ANALYZE_WORDS = [
+  "Connecting Groq",
+  "Decrypting Commits",
+  "Analyzing Patterns",
+  "Matching Persona",
+  "Generating Verdict",
+];
+
 
 type quoteReqType = {
   persona: string,
@@ -11,11 +20,12 @@ type quoteReqType = {
   onQuoteGenerated: (quote: string) => void;
 }
 
-export default function QuotePage({ persona, language, commitCount , onQuoteGenerated}: quoteReqType) {
+export default function QuotePage({ persona, language, commitCount, onQuoteGenerated }: quoteReqType) {
   const [quote, setQuote] = useState("");
   const [displayedQuote, setDisplayedQuote] = useState("");
   const [status, setStatus] = useState("idle");
   const [isStarted, setIsStarted] = useState(false);
+  const [analyzeIndex, setAnalyzeIndex] = useState(0);
 
   const fetchAIVerdict = async () => {
     setIsStarted(true);
@@ -23,18 +33,15 @@ export default function QuotePage({ persona, language, commitCount , onQuoteGene
     try {
       const res = await fetch("/api/quote", {
         method: "POST",
-        body: JSON.stringify({
-          persona,
-          language,
-          commitCount
-        }),
+        body: JSON.stringify({ persona, language, commitCount }),
       });
       const data = await res.json();
-      setTimeout(()=>{
-      setQuote(data.quote);
-      onQuoteGenerated(data.quote)
-      setStatus("typing");
-      },4000)
+      
+      setTimeout(() => {
+        setQuote(data.quote);
+        onQuoteGenerated(data.quote);
+        setStatus("typing");
+      }, 4000);
 
     } catch (e) {
       setQuote("You code like a wizard, but your commit messages are pure chaos.");
@@ -43,7 +50,18 @@ export default function QuotePage({ persona, language, commitCount , onQuoteGene
   };
 
   useEffect(() => {
-    const speed = quote.length > 120 ? 20 : 35;
+    if (status !== "analyzing") return;
+
+    const interval = setInterval(() => {
+      setAnalyzeIndex((i) => (i + 1) % ANALYZE_WORDS.length);
+    }, 1100);
+
+    return () => clearInterval(interval);
+  }, [status]);
+
+
+  useEffect(() => {
+    const speed = quote.length > 120 ? 25 : 40;
     if (status === "typing" && quote) {
       let i = 0;
       const interval = setInterval(() => {
@@ -59,90 +77,128 @@ export default function QuotePage({ persona, language, commitCount , onQuoteGene
   }, [status, quote]);
 
   return (
-    <div className="min-h-screen w-full bg-black text-white flex flex-col items-center justify-center relative md:px-5">
+    <div className="min-h-screen w-full bg-[#050505] text-white flex flex-col items-center justify-center relative overflow-hidden px-4">
       
-      
-      <div className="pb-17 md:pb-0 z-10 text-center flex flex-col items-center w-full md:mx-auto">
+      <div className="absolute inset-0 bg-linear-to-t from-green-900/50 to-transparent pointer-events-none" />
+
+      <div className="z-10 text-center flex flex-col items-center w-full max-w-4xl pb-7">
         
         <motion.div 
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          className="bg-black px-4 py-1 mb-12 md:mb-10"
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }}
+          className="flex items-center gap-2 md:gap-3 text-zinc-400 font-mono uppercase tracking-[0.3em] md:tracking-[0.5em] text-[15px] md:text-xl mb-8 md:mb-12"
         >
-          <p className="text-[10px] md:text-xs font-black tracking-[0.3em] text-fuchsia-500 flex items-center gap-2 uppercase">
-            <BrainCircuit size={14} /> CHAPTER 06: THE QUOTE
-          </p>
+          {/* <BrainCircuit size={12} className="text-zinc-600 md:w-3.5" />  */}
+          Chapter 06: The Verdict
         </motion.div>
 
-        {(status !== "analyzing" && status !== "idle") && (
-                        <h2 className="text-4xl md:text-7xl font-black italic tracking-tighter bg-white text-black px-4 md:px-6 py-2 shadow-[6px_6px_0px_0px_rgba(217,70,239,1)] md:shadow-[10px_10px_0px_0px_rgba(217,70,239,1)]">
-                THE VERDICT
-              </h2>
-        )}
-
         <AnimatePresence mode="wait">
-          <div className="w-full max-w-2xl min-h-[400px] md:h-[480px] flex justify-center items-center px-2">
           {!isStarted ? (
             <motion.div 
               key="start"
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.95 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              exit={{ opacity: 0, y: -20 }}
               className="flex flex-col items-center w-full"
             >
-              <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter mb-8 text-white uppercase leading-tight">
-                Ready for the <br/> AI Verdict?
+              <h2 className="text-4xl md:text-8xl font-serif italic tracking-tighter mb-8 md:mb-10 leading-tight md:leading-none">
+                Ready for the <br/> <span className="text-zinc-500">Verdict?</span>
               </h2>
+              
               <button
                 onClick={fetchAIVerdict}
-                className="group relative bg-fuchsia-500 text-black font-black px-6 md:px-8 py-3 md:py-4 text-lg md:text-2xl italic tracking-tighter border-4 border-white hover:bg-white transition-colors shadow-[6px_6px_0px_0px_rgba(255,255,255,1)] md:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] active:translate-x-1 active:translate-y-1 active:shadow-none"
+                className="group cursor-pointer flex items-center gap-3 md:gap-4 bg-white text-black px-10 md:px-12 py-4 md:py-5 rounded-full font-bold text-base md:text-lg hover:bg-zinc-200 transition-all hover:scale-105 active:scale-95 shadow-2xl"
               >
-                <span className="flex items-center gap-3">
-                  <Wand2 className="group-hover:rotate-12 transition-transform w-5 h-5 md:w-6 md:h-6" />
-                  GET AI QUOTE
-                </span>
+                <Wand2 size={18} className="md:w-5 md:h-5 group-hover:rotate-12 transition-transform" />
+                Ask AI
               </button>
-              <p className="mt-6 text-neutral-500 font-mono text-[10px] uppercase tracking-[0.2em]">Warning: AI might be brutally honest</p>
+              
+              <p className="mt-8 text-zinc-600 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.3em] md:tracking-[0.4em] px-4">
+                Warning: Decryption may be brutally honest
+              </p>
             </motion.div>
-          ) : status === "analyzing" ? (
-              /* ANALYZING STATE */
-              <div className="flex flex-col gap-4 items-center w-full max-w-lg">
-                <Skeleton className="h-6 md:h-7 w-[80%] rounded-[2px] bg-fuchsia-500/20 animate-pulse" />
-                <Skeleton className="h-6 md:h-7 w-[95%] rounded-[2px] bg-fuchsia-500/10 animate-pulse delay-75" />
-                <Skeleton className="h-6 md:h-7 w-[70%] rounded-[2px] bg-fuchsia-500/20 animate-pulse delay-150" />
-                <Skeleton className="h-6 md:h-7 w-[85%] rounded-[2px] bg-fuchsia-500/10 animate-pulse delay-300" />
-                <Skeleton className="h-6 md:h-7 w-[60%] rounded-[2px] bg-fuchsia-500/20 animate-pulse delay-500" />
 
-                <p className="mt-6 text-[10px] font-mono  tracking-[0.3em] text-fuchsia-500/90">
-                  groq is thinking...
-                </p>
+          ) : status === "analyzing" ? 
+          (
+            <motion.div 
+              key="analyzing"
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              exit={{ opacity: 0 }}
+              className="flex flex-col items-center gap-6"
+            >
+              <div className="w-48 md:w-64 h-px bg-zinc-800 relative overflow-hidden">
+                <motion.div 
+                  initial={{ x: "-100%" }}
+                  animate={{ x: "100%" }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 bg-linear-to-r from-transparent via-zinc-400 to-transparent w-1/2"
+                />
               </div>
-          ) : (
-            /* REVEAL STATE */
+              <p className="text-zinc-400 font-mono text-[10px] md:text-xs tracking-[0.4em] md:tracking-[0.6em] animate-pulse">
+                <motion.span
+                  key={analyzeIndex}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {ANALYZE_WORDS[analyzeIndex]}...
+                </motion.span>
+              </p>
+              <div className="flex gap-2">
+                {[...Array(3)].map((_, i) => (
+                  <motion.div 
+                    key={i}
+                    animate={{ opacity: [0.2, 1, 0.2] }}
+                    transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
+                    className="w-1 h-1 bg-zinc-500 rounded-full"
+                  />
+                ))}
+              </div>
+            </motion.div>
+          ) 
+          : (
             <motion.div 
               key="quote-reveal"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-              className="flex flex-col items-center w-full"
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }}
+              className="flex flex-col items-center w-full px-2"
             >
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-zinc-500 font-mono text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.5em] uppercase mb-6 md:mb-8"
+              >
+                SYSTEM LOG - FINAL OUTPUT
+              </motion.div>
 
-
-              <div className=" relative p-6 md:p-10 bg-neutral-900 border md:border-2 shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] md:shadow-[15px_15px_0px_0px_rgba(0,0,0,1)] w-full">
-                <span className="text-2xl md:text-4xl font-black italic leading-tight block text-left break-words">
+              <div className="relative max-w-3xl">
+                <h1 className="text-3xl md:text-5xl font-serif italic leading-snug md:leading-tight text-center px-2">
                   "{displayedQuote}"
-                  {status === "typing" && <span className="inline-block w-2 h-6 md:w-4 md:h-10 bg-fuchsia-500 ml-2 animate-pulse" />}
-                </span>
+                  {status === "typing" && (
+                    <span className="inline-block w-0.5 md:w-1 h-6 md:h-12 bg-zinc-400 ml-1 md:ml-2 animate-pulse align-middle" />
+                  )}
+                </h1>
                 
-                <Sparkles className="absolute -top-4 -right-4 md:-top-8 md:-right-8 text-fuchsia-500 w-8 h-8 md:w-16 md:h-16" />
+                {status === "finished" && (
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.8 }} 
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="mt-12 md:mt-16 flex flex-col items-center gap-4"
+                  >
+                    <div className="h-px w-8 md:w-12 bg-zinc-800" />
+                    <p className="text-zinc-400 font-mono text-[9px] md:text-[9px] uppercase tracking-[0.3em] md:tracking-[0.5em] px-4">
+                      <span>OUTPUT</span> LOCKED - CONTINUE
+                    </p>
+                    <p className="text-zinc-400 font-mono text-[9px] md:text-[9px] uppercase tracking-[0.3em] md:tracking-[0.5em] px-4">
+                      Collect your <span className="text-white">Card</span> next
+                    </p>
+                  </motion.div>
+                )}
               </div>
-
-              {status === "finished" && (
-                <motion.p 
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                  className="mt-10 text-fuchsia-500 font-mono text-[10px] uppercase tracking-[0.3em]"
-                >
-                  Analysis Complete // 2025_Wrapped_Final
-                </motion.p>
-              )}
             </motion.div>
           )}
-          </div>
         </AnimatePresence>
       </div>
     </div>

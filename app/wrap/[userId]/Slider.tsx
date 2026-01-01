@@ -53,6 +53,7 @@ export default function Slider(props: Props) {
   const personaX = detectPersona(props.commitHour, props.commitDates, props.totalCommits);
   const busyDay = getBusiestDay(props.commitDates);
   const languages = detectTopLanguages(props.repoDetails);
+  // console.log(languages)
 
   return (
     <div className="min-h-screen bg-[#050505] text-white relative overflow-hidden flex items-center justify-center font-sans">
@@ -102,12 +103,12 @@ export default function Slider(props: Props) {
         <motion.div 
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="fixed bottom-7 left-1/2 -translate-x-1/2 z-30 flex items-center gap-6 px-6 py-3"
+          className="fixed bottom-7 left-1/2 -translate-x-1/2 z-30 flex items-center gap-0.5 md:gap-6 px-6 py-3"
         >
           <button
             onClick={() => setStep((s) => Math.max(1, s - 1))}
             disabled={step === 1}
-            className="p-2 text-zinc-500 cursor-pointer hover:text-white disabled:opacity-0 transition-all"
+            className="p-2 md:text-zinc-500 cursor-pointer hover:text-white disabled:opacity-0 transition-all"
           >
             <ArrowLeft className="w-6 h-6" />
           </button>
@@ -120,7 +121,7 @@ export default function Slider(props: Props) {
                 setStep((s) => s + 1);
                 setShowNav(false);
               }}
-              className="flex items-center gap-2 bg-white text-black px-5 py-2 rounded-full font-bold text-sm hover:bg-zinc-200 transition-all hover:scale-105"
+              className="flex items-center gap-2 cursor-pointer bg-white text-black md:px-5 md:py-2 px-2 py-2 rounded-[5px] font-bold text-sm hover:bg-zinc-200 transition-all hover:scale-105"
             >
               <Sparkles size={16} />
               Finalize
@@ -128,7 +129,7 @@ export default function Slider(props: Props) {
           ) : (
             <button
               onClick={() => setStep((s) => s + 1)}
-              className="p-2 cursor-pointer text-zinc-500 hover:text-white transition-all hover:scale-110"
+              className="p-2 cursor-pointer md:text-zinc-500 hover:text-white transition-all hover:scale-110"
             >
               <ArrowRight className="w-6 h-6" />
             </button>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Terminal } from "lucide-react";
+import { Terminal, Code2 } from "lucide-react";
 import { getLanguageInsight } from "../utils/LangInsight";
 
 type LanguageUsage = {
@@ -17,111 +17,106 @@ type LanguagePageProps = {
 export default function LanguagePage({ languages }: LanguagePageProps) {
   if (!languages || languages.length === 0) return null;
 
-  const totalCommits = languages.reduce(
-    (acc, curr) => acc + curr.commits,
-    0
-  );
-
+  const totalCommits = languages.reduce((acc, curr) => acc + curr.commits, 0);
   const mainLang = languages[0];
-  const mainPercentage = Math.round(
-    (mainLang.commits / totalCommits) * 100
-  );
-
-  const insight = getLanguageInsight(languages)
+  const mainPercentage = Math.round((mainLang.commits / totalCommits) * 100);
+  const insight = getLanguageInsight(languages);
 
   return (
-    <div className="h-screen w-full pb-33 md:pb-20 bg-black text-white flex flex-col items-center justify-center relative overflow-hidden px-5">
+    <div className="min-h-screen w-full bg-[#050505] text-white flex flex-col items-center justify-center relative overflow-hidden px-5 py-16 md:py-0">
 
-    
+      <div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-75 md:w-150 h-75 md:h-150 blur-[100px] md:blur-[140px] rounded-full pointer-events-none opacity-30 md:opacity-20 transition-colors duration-1000"
+        style={{ backgroundColor: mainLang.color }}
+      />
 
-      <div className="z-10 text-center flex flex-col items-center w-full max-w-2xl">
+      <div className="z-10 text-center flex flex-col items-center w-full max-w-3xl pb-7">
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-3 text-zinc-500 font-mono uppercase tracking-[0.3em] md:tracking-[0.5em] text-[10px] md:text-xs mb-8 md:mb-10"
+        >
+          {/* <Terminal size={12} className="text-zinc-600 md:w-[14px]" />  */}
+          Chapter 05: The Language
+        </motion.div>
+
+        <motion.h2 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="text-xl md:text-4xl font-serif italic text-zinc-400 mb-8 md:mb-12 tracking-tight px-2"
+        >
+          {insight.title}
+        </motion.h2>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="w-full flex flex-col items-center mb-8 md:mb-12"
+        >
+          <div className="flex flex-col md:flex-row items-center md:items-baseline gap-2 md:gap-4 mb-2">
+             <h1 className="text-5xl md:text-9xl font-black tracking-tighter uppercase italic break-all md:break-normal">
+               {mainLang.language}
+             </h1>
+             <span className="text-2xl md:text-5xl font-serif italic text-zinc-500">
+               {mainPercentage}%
+             </span>
+          </div>
+          <div className="flex items-center gap-2 text-zinc-500 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em]">
+             <Code2 size={12} /> Primary Tech Stack 2025
+          </div>
+        </motion.div>
+
+        <div className="w-full h-2.5 md:h-3 bg-white/5 rounded-full flex overflow-hidden mb-10 md:mb-12 border border-white/10 shadow-inner">
+          {languages.map((lang, i) => (
+            <motion.div
+              key={lang.language}
+              initial={{ width: 0 }}
+              animate={{ width: `${(lang.commits / totalCommits) * 100}%` }}
+              transition={{ delay: 0.5 + i * 0.1, duration: 1.5, ease: "circOut" }}
+              style={{ backgroundColor: lang.color }}
+              className="h-full relative group"
+            >
+              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity" />
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-8 md:gap-x-12 w-full max-w-2xl px-2">
+          {languages.map((lang, i) => (
+            <motion.div
+              key={lang.language}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 + i * 0.1 }}
+              className="flex items-center gap-2 md:gap-3"
+            >
+              <div
+                className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full shrink-0"
+                style={{ backgroundColor: lang.color, boxShadow: `0 0 8px ${lang.color}` }}
+              />
+              <div className="text-left">
+                <p className="text-[9px] md:text-[10px] uppercase tracking-widest text-zinc-500 font-bold truncate max-w-20 md:max-w-none">
+                  {lang.language}
+                </p>
+                <p className="text-base md:text-lg font-serif italic">
+                  {lang.commits} <span className="text-[9px] not-italic text-zinc-600 tracking-tighter">Commits</span>
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="flex items-center gap-2 text-fuchsia-500 font-black uppercase tracking-[0.2em] text-xs mb-10"
+          transition={{ delay: 1.8 }}
+          className="mt-12 md:mt-16 relative w-full flex justify-center"
         >
-          <Terminal size={14} /> Chapter 05: The Language
-        </motion.div>
-
-        <h2 className="text-3xl md:text-5xl font-black italic tracking-tighter mb-12">
-          {insight.title}
-        </h2>
-
-        {/* Card */}
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="w-full bg-white border-4 border-black p-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] rounded-sm text-black relative"
-        >
-          <div className="absolute -top-5 -left-5 bg-black text-white px-4 py-2 font-black italic text-sm border-2 border-white rotate-[-5deg]">
-            TOP TECH
-          </div>
-
-          <div className="flex justify-between items-end mb-6">
-            <div className="text-left">
-              <p className="text-xs font-black uppercase tracking-widest text-neutral-400">
-                Main Syntax
-              </p>
-              <h1 className="text-4xl md:text-7xl font-black tracking-tighter">
-                {mainLang.language}
-              </h1>
-            </div>
-            <div className="text-4xl md:text-6xl font-black italic">
-              {mainPercentage}%
-            </div>
-          </div>
-
-          <div className="w-full h-12 bg-neutral-100 border-4 border-black flex mb-8">
-            {languages.map((lang, i) => (
-              <motion.div
-                key={lang.language}
-                initial={{ width: 0 }}
-                animate={{
-                  width: `${(lang.commits / totalCommits) * 100}%`,
-                }}
-                transition={{ delay: 0.5 + i * 0.2, duration: 1 }}
-                style={{ backgroundColor: lang.color }}
-                className="h-full border-r-4 last:border-r-0 border-black flex items-center justify-center overflow-hidden"
-              >
-                {(lang.commits / totalCommits) > 0.2 && (
-                  <span className="text-[10px] font-black uppercase text-black/70 truncate px-2">
-                    {lang.language}
-                  </span>
-                )}
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 text-left">
-            {languages.map((lang) => (
-              <div
-                key={lang.language}
-                className="flex items-center gap-2"
-              >
-                <div
-                  className="w-3 h-3 border-2 border-black"
-                  style={{ backgroundColor: lang.color }}
-                />
-                <span className="text-sm font-bold">
-                  {lang.language}:{" "}
-                  <span className="font-black italic">
-                    {lang.commits} commits
-                  </span>
-                </span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5 }}
-          className="mt-10 p-4 border-2 border-dashed border-neutral-700 rounded-xl"
-        >
-          <p className="text-neutral-400 font-medium italic">
-            {`“${insight.description}”`}
+          <div className="absolute -inset-4 bg-white/2 blur-xl rounded-full" />
+          <p className="relative text-zinc-400 font-light italic text-[15px] md:text-base max-w-70 md:max-w-md border-x border-white/35 md:border-zinc-700 px-2 md:px-4 py-2 text-center">
+            “{insight.description}”
           </p>
         </motion.div>
       </div>

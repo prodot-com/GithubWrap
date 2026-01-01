@@ -51,5 +51,5 @@ export function detectTopLanguages(
     }))
     .sort((a, b) => b.commits - a.commits);
 
-  return sorted.slice(0, 2);
+  return sorted.slice(0, 3);
 }

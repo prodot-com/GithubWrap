@@ -17,7 +17,6 @@ type WrappedCardProps = {
 export const WrappedCard = forwardRef<HTMLDivElement, WrappedCardProps>(
   ({ username, avatarUrl, totalCommits, persona, topLanguage, busiestDay, quote }, ref) => {
     
-    // Animation Variants
     const container = {
       hidden: { opacity: 0, y: 20 },
       show: {
@@ -33,6 +32,8 @@ export const WrappedCard = forwardRef<HTMLDivElement, WrappedCardProps>(
     };
 
     return (
+      <div>
+        <div className="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-blue-500/45 blur-[200px] rounded-full pointer-events-none" />
       <motion.div
         ref={ref}
         variants={container}
@@ -41,10 +42,10 @@ export const WrappedCard = forwardRef<HTMLDivElement, WrappedCardProps>(
         className="relative w-[90vw] md:w-112.5 aspect-4/5 bg-[#0a0a0a] text-zinc-100 p-5 md:p-6 overflow-hidden 
         flex flex-col justify-between border-3 border-white/60 shadow-[0_0_50px_rgba(0,0,0,1)] font-sans"
       >
-        <div className="absolute top-0 right-0 w-full h-full opacity-20 pointer-events-none">
+        {/* <div className="absolute top-0 right-0 w-full h-full opacity-20 pointer-events-none">
            <div className="absolute -top-20 -right-20 w-80 h-80 bg-blue-600/20 blur-[120px] rounded-full" />
-           <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-emerald-600/20 blur-[120px] rounded-full" />
-        </div>
+           <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-emerald-400 blur-[120px] rounded-full" />
+        </div> */}
 
         <div className="flex justify-between items-center z-10">
           <div className="flex items-center gap-3">
@@ -119,6 +120,7 @@ export const WrappedCard = forwardRef<HTMLDivElement, WrappedCardProps>(
             </p>
         </div>
       </motion.div>
+      </div>
     );
   }
 );
