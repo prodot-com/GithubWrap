@@ -29,7 +29,8 @@ export default function Home() {
   const checkUsername = (name: any): string => {
     if (!name) return "";
     const username =  String(name).trim().replace(/^@+/, "");
-    return username.toLocaleLowerCase()
+    // return username.toLocaleLowerCase()
+    return username
   };
 
   useEffect(() => {
@@ -51,50 +52,54 @@ export default function Home() {
         const data = await res.json();
         setUserDetails(data);
         setError("");
-        setloading(false)
       } catch (err) {
         setUserDetails(null);
         setError("User not identified");
+      } finally{
+        setloading(false)
       }
     }, 500);
 
     return () => clearTimeout(timeout);
   }, [username]);
+  
 
   useEffect(() => {
-    setButtonEnable(!!(username.trim() && userDetails?.login === username.trim()));
+  setButtonEnable(
+    !!(
+      username.trim() &&
+      userDetails?.login.toLowerCase() === username.trim().toLowerCase()
+    )
+  );
   }, [username, userDetails]);
 
-  // const redirectHandler = () => {
-  //   if (!username.trim()) return;
-  //   router.push(`/intro/${username}`);
-  // };
 
-const redirectHandler = async () => {
-  setloading(true)
-  const cleanUsername = username.trim();
-  if (!cleanUsername) return;
 
-  try {
-    await fetch("/api/v1", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: cleanUsername,
-      }),
-    });
-  } catch (error) {
-    console.error("API failed, redirecting anyway:", error);
-  
-  } finally {
+  const redirectHandler = async () => {
+    setloading(true)
+    const cleanUsername = username.trim();
+    if (!cleanUsername) return;
 
-    if(!username.trim()) return;
-    router.push(`/intro/${username}`);
+    try {
+      await fetch("/api/v1", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: cleanUsername,
+        }),
+      });
+    } catch (error) {
+      console.error("API failed, redirecting anyway:", error);
     
-  }
-};
+    } finally {
+
+      if(!username.trim()) return;
+      router.push(`/intro/${username}`);
+      
+    }
+  };
 
 
 
@@ -164,7 +169,7 @@ const redirectHandler = async () => {
               ):(
               <button
                 onClick={redirectHandler}
-                disabled={!buttonEnable}
+                disabled={!buttonEnable || loading}
                 className="group cursor-pointer flex items-center justify-center bg-white text-black rounded-full w-10 h-10 md:w-14 md:h-14 disabled:opacity-20 disabled:grayscale transition-all hover:scale-105 active:scale-95 shrink-0"
               >
                 <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 transform transition-transform group-hover:rotate-45" />
