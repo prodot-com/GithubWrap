@@ -73,7 +73,6 @@ export default async function UserIntroPage({ params }: Props) {
     }
   `;
 
-
   const statsRes = await axios.post(
     "https://api.github.com/graphql",
     {
@@ -84,10 +83,7 @@ export default async function UserIntroPage({ params }: Props) {
   );
 
   const user = statsRes.data.data.user;
-  console.log(user)
   const repos = user.contributionsCollection.commitContributionsByRepository ?? [];
-
-  // const commitLang = 
 
     const commitTimings = await Promise.all(
     repos.map((repo: any) =>
@@ -110,21 +106,17 @@ export default async function UserIntroPage({ params }: Props) {
     )
   );
 
-//   console.log(commitTimings)
-
-  // Flatten commit timestamps
   const commitDates = commitTimings.flat().map(
     (c: any) => c.authoredDate
   );
 
-  // console.log(commitDates)
+
 
 const hours = commitDates.map(ts =>
   new Date(ts).getHours()
 );
 
 
-//   console.log(hours)
 
   return (
     <Slider

@@ -4,17 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronRight, Sparkles } from "lucide-react";
 import { BorderBeam } from "@/components/ui/border-beam";
-import { PrismaClient, Prisma } from "@/app/generated/prisma/client";
-import { PrismaPg } from '@prisma/adapter-pg'
 import "dotenv/config"
-
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL,
-})
-
-const prisma = new PrismaClient({
-  adapter,
-});
 
 type IntroProps = {
   user: {
@@ -25,25 +15,6 @@ type IntroProps = {
 };
 
 const Intro =  ({ user, userId }: IntroProps) => {
-  // try {
-  //   const saveUsername = async()=>{
-  // const res =await prisma.user.create({
-  //   data:{
-  //     username: userId
-  //   }
-  // })
-
-  // console.log(res)
-  // }
-
-  // saveUsername()
-    
-  // } catch (error) {
-  //   console.log(error)
-    
-  // }
-
-  
 
   return (
     <div className="w-full min-h-screen bg-[#050505] text-zinc-100 flex flex-col items-center justify-center overflow-hidden relative">

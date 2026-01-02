@@ -26,7 +26,6 @@ export async function POST(req: Request) {
     );
 
     const users = response.data.data.search.nodes[0];
-    // console.log(users)
 
     return NextResponse.json(users);
   } catch (error) {
