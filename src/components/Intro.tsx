@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronRight, Sparkles } from "lucide-react";
 import { BorderBeam } from "@/components/ui/border-beam";
+import "dotenv/config"
 
 type IntroProps = {
   user: {
@@ -13,7 +14,8 @@ type IntroProps = {
   userId: string;
 };
 
-const Intro = ({ user, userId }: IntroProps) => {
+const Intro =  ({ user, userId }: IntroProps) => {
+
   return (
     <div className="w-full min-h-screen bg-[#050505] text-zinc-100 flex flex-col items-center justify-center overflow-hidden relative">
       {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-green-500/25 blur-[120px] rounded-full pointer-events-none" /> */}

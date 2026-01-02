@@ -17,8 +17,6 @@ export async function POST(req: Request) {
   const body = (await req.json()) as WrappedQuoteRequest;
   const { persona, language, commitCount } = body;
 
-  // console.log(persona, language, commitCount)
-
   try {
     const completion = await groq.chat.completions.create({
       model: "openai/gpt-oss-120b",

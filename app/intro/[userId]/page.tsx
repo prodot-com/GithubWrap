@@ -20,6 +20,8 @@ export default async function UserIntroPage({ params }: Props) {
   );
   const user = response.data;
 
+  
+
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center relative overflow-hidden">
       <Intro user={user} userId={userId}/>

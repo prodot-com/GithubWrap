@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
-import { ArrowDown, ArrowUpRight, Github, GithubIcon, HomeIcon, Linkedin, LinkedinIcon, Search } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Github, GithubIcon, LinkedinIcon, Loader} from 'lucide-react';
 import { useEffect, useState } from 'react';
 import BrokenArrowIcon from '@/src/components/BrokenArrow';
 import Link from 'next/link';
@@ -24,6 +24,7 @@ export default function Home() {
   const [userDetails, setUserDetails] = useState<userType | null>(null);
   const [error, setError] = useState('');
   const [buttonEnable, setButtonEnable] = useState<boolean>(false);
+  const [loading, setloading] = useState<boolean>(false);
 
   const checkUsername = (name: any): string => {
     if (!name) return "";
@@ -40,6 +41,7 @@ export default function Home() {
 
     const timeout = setTimeout(async () => {
       try {
+        setloading(true)
         const res = await fetch("/api/user", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -49,11 +51,12 @@ export default function Home() {
         const data = await res.json();
         setUserDetails(data);
         setError("");
+        setloading(false)
       } catch (err) {
         setUserDetails(null);
         setError("User not identified");
       }
-    }, 300);
+    }, 500);
 
     return () => clearTimeout(timeout);
   }, [username]);
@@ -62,10 +65,38 @@ export default function Home() {
     setButtonEnable(!!(username.trim() && userDetails?.login === username.trim()));
   }, [username, userDetails]);
 
-  const rediretcHandler = () => {
-    if (!username.trim()) return;
+  // const redirectHandler = () => {
+  //   if (!username.trim()) return;
+  //   router.push(`/intro/${username}`);
+  // };
+
+const redirectHandler = async () => {
+  setloading(true)
+  const cleanUsername = username.trim();
+  if (!cleanUsername) return;
+
+  try {
+    await fetch("/api/v1", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: cleanUsername,
+      }),
+    });
+  } catch (error) {
+    console.error("API failed, redirecting anyway:", error);
+  
+  } finally {
+
+    if(!username.trim()) return;
     router.push(`/intro/${username}`);
-  };
+    
+  }
+};
+
+
 
   return (
     <div className="bg-black selection:bg-zinc-500 min-h-screen overflow-x-hidden font-sans">
@@ -124,13 +155,22 @@ export default function Home() {
                 }}
                 className="flex-1 bg-transparent h-10 md:h-12 outline-none text-base md:text-2xl font-light text-white placeholder-white/75 md:placeholder:text-zinc-500"
               />
+              {loading ? (
+                <button
+                  className="group cursor-pointer flex items-center justify-center bg-white/15 text-black/45 rounded-full w-10 h-10 md:w-14 md:h-14 disabled:opacity-20 disabled:grayscale transition-all hover:scale-105 active:scale-95 shrink-0"
+                >
+                  <Loader className="h-5 w-5 md:h-8 md:w-8 transform transition-transform animate-spin" />
+              </button>
+              ):(
               <button
-                onClick={rediretcHandler}
+                onClick={redirectHandler}
                 disabled={!buttonEnable}
                 className="group cursor-pointer flex items-center justify-center bg-white text-black rounded-full w-10 h-10 md:w-14 md:h-14 disabled:opacity-20 disabled:grayscale transition-all hover:scale-105 active:scale-95 shrink-0"
               >
                 <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 transform transition-transform group-hover:rotate-45" />
               </button>
+              )}
+
             </div>
             {error && <p className="text-red-500 text-[10px] font-mono mt-3 text-center uppercase tracking-widest">{error}</p>}
           </motion.div>
