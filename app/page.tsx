@@ -283,7 +283,7 @@ export default function Home() {
                 </Link>
             </div>
             <p className="text-[10px] ml-3 md:ml-0 md:text-[9px] font-mono tracking-[0.3em] md:tracking-[0.4em] uppercase text-zinc-600">
-              ©2025 PROBAL GHOSH
+              ©2026 PROBAL GHOSH
             </p>
           </div>
         </div>
